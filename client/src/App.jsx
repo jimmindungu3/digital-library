@@ -1,7 +1,11 @@
-import React from "react";
+import StudentDasboard from "../src/components/StudentDashboard";
 
 const App = () => {
-  return <div>App</div>;
+  return (
+    <div>
+      <StudentDasboard />
+    </div>
+  );
 };
 
 export default App;
