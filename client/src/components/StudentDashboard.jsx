@@ -213,7 +213,7 @@ const App = () => {
           <div className="p-6 bg-white border border-gray-200 rounded-lg">
             <h2 className="flex items-center mb-4 text-xl font-semibold">
               <FaStar className="w-5 h-5 mr-2 text-yellow-500" />
-              Most Viewed/Downloaded
+              Most Viewed
             </h2>
             <div className="space-y-4">
               {[
@@ -248,6 +248,30 @@ const App = () => {
                   subject: "English",
                   teacher: "Mrs. Kamau",
                   downloads: 98,
+                },
+                {
+                  id: 5,
+                  title: "Cell Biology Diagrams",
+                  type: "Image",
+                  subject: "Biology",
+                  teacher: "Dr. Wambui",
+                  downloads: 175,
+                },
+                {
+                  id: 6,
+                  title: "Trigonometry Practice Problems",
+                  type: "PDF",
+                  subject: "Mathematics",
+                  teacher: "Mr. Kariuki",
+                  downloads: 210,
+                },
+                {
+                  id: 7,
+                  title: "French Grammar Guide",
+                  type: "Word",
+                  subject: "French",
+                  teacher: "Ms. Dubois",
+                  downloads: 87,
                 },
               ].map((item) => {
                 // Determine icon and color based on file type
@@ -303,7 +327,7 @@ const App = () => {
                       <p className="text-lg font-bold text-blue-600">
                         {item.downloads}
                       </p>
-                      <p className="text-xs text-gray-500">Views/Downloads</p>
+                      <p className="text-xs text-gray-500">Views</p>
                     </div>
                   </div>
                 );

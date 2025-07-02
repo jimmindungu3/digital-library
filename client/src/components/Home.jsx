@@ -23,7 +23,7 @@ const Home = () => {
 
         {/* Dashboard Cards */}
         <div className="grid gap-8 md:grid-cols-2">
-          {/* Student Dashboard Card */}
+          {/* Student Dashboard */}
           <div className="overflow-hidden transition-all duration-300 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md hover:border-blue-300">
             <div className="p-6 sm:p-8">
               <div className="flex items-center mb-4">
@@ -71,7 +71,7 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Teacher Dashboard Card */}
+          {/* Teacher Dashboard */}
           <div className="overflow-hidden transition-all duration-300 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md hover:border-blue-300">
             <div className="p-6 sm:p-8">
               <div className="flex items-center mb-4">
@@ -120,7 +120,7 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Footer Note */}
+        {/* Footer */}
         <div className="mt-16 text-center">
           <p className="text-sm text-gray-500">
             Need help? Contact the school administration at admin@kimangu.edu

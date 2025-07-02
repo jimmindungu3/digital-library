@@ -2,7 +2,7 @@ import { FaUser } from "react-icons/fa";
 
 const Header = () => {
   return (
-    <div className="mb-10 bg-white border-b border-gray-200 shadow-sm">
+    <div className="mb-10 bg-white border-b border-gray-200">
       <div className="px-4 py-3 mx-auto max-w-7xl">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
