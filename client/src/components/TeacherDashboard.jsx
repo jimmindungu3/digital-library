@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { IoLibrary } from "react-icons/io5";
+import Footer from "./Footer";
 import {
   FaSearch,
   FaFileWord,
@@ -18,7 +20,7 @@ import {
   FaChartBar,
   FaPlus,
 } from "react-icons/fa";
-import { IoLibrary } from "react-icons/io5";
+import Header from "./Header";
 
 const TeacherDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -105,70 +107,9 @@ const TeacherDashboard = () => {
   return (
     <div className="bg-gray-100">
       <div className="min-h-screen p-4 mx-auto bg-white max-w-7xl">
-        {/* Top Bar - Mostly fine, subtle adjustments */}
-        <div className="mb-6 bg-white border-b border-gray-200 shadow-sm sm:mb-10">
-          <div className="px-2 py-3 mx-auto sm:px-4 max-w-7xl">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2 sm:space-x-4">
-                <img
-                  src="https://kimangu.vercel.app/assets/images/logo.png"
-                  alt="logo"
-                  className="w-6 h-6 sm:w-8 sm:h-8"
-                />
-                <h1 className="text-sm font-semibold text-gray-800 sm:text-lg">
-                  KIMANGU DAY SECONDARY
-                </h1>
-                <span className="hidden text-gray-400 sm:inline">|</span>
-                <span className="hidden text-sm text-gray-500 sm:inline">
-                  Teacher Dashboard
-                </span>
-              </div>
-              <div className="flex items-center space-x-2 sm:space-x-4">
-                <div className="relative group">
-                  <button className="flex items-center space-x-1 text-gray-500 hover:text-gray-800">
-                    <FaUser className="w-4 h-4 sm:w-5 sm:h-5" />
-                    <span className="hidden sm:inline">{teacherName}</span>
-                    <svg
-                      className="hidden w-4 h-4 sm:block"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </button>
-                  <div className="absolute right-0 z-10 hidden w-48 py-1 bg-white rounded-md shadow-lg group-hover:block">
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      Profile
-                    </a>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      Settings
-                    </a>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      Log out
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Header />
 
-        {/* Header - Teacher specific - No changes needed, already subtle */}
+        {/* Header */}
         <header className="mb-6 sm:mb-8">
           <div className="grid grid-cols-[auto_1fr] gap-3 sm:gap-4 items-start">
             <div className="text-2xl sm:text-3xl">🧑‍🏫</div>
@@ -470,11 +411,7 @@ const TeacherDashboard = () => {
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="py-3 mt-20 text-xs text-center text-gray-500 bg-white border-t sm:text-sm">
-          © {new Date().getFullYear()} Kimangu Day Secondary School. All rights
-          reserved.
-        </div>
+        <Footer />
       </div>
     </div>
   );

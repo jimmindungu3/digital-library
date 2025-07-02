@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   FaSearch,
   FaFileWord,
-  FaUsers,
   FaFilePowerpoint,
   FaFilePdf,
   FaFileVideo,
@@ -14,143 +13,20 @@ import {
   FaClock,
   FaStar,
   FaPlay,
-  FaFile,
 } from "react-icons/fa";
 
 import { IoLibrary } from "react-icons/io5";
+import Footer from "./Footer";
+import Header from "./Header";
 
 const App = () => {
-  // Simple state to track search input
   const [searchTerm, setSearchTerm] = useState("");
-
-  // Sample data for learning materials
-  const recentMaterials = [
-    {
-      id: 1,
-      title: "Math Quiz - Algebra Basics",
-      type: "Quiz",
-      subject: "Mathematics",
-      teacher: "Mr. Johnson",
-      uploadDate: "2 days ago",
-    },
-    {
-      id: 2,
-      title: "History Notes - World War II",
-      type: "Notes",
-      subject: "History",
-      teacher: "Ms. Smith",
-      uploadDate: "3 days ago",
-    },
-    {
-      id: 3,
-      title: "Physics Past Paper 2024",
-      type: "Past Paper",
-      subject: "Physics",
-      teacher: "Dr. Brown",
-      uploadDate: "1 week ago",
-    },
-    {
-      id: 4,
-      title: "English Essay Guidelines",
-      type: "Notes",
-      subject: "English",
-      teacher: "Mrs. Davis",
-      uploadDate: "1 week ago",
-    },
-  ];
-
-  const popularDownloads = [
-    {
-      id: 1,
-      title: "Chemistry Lab Manual",
-      downloads: 245,
-      subject: "Chemistry",
-    },
-    {
-      id: 2,
-      title: "Biology Final Exam 2023",
-      downloads: 189,
-      subject: "Biology",
-    },
-    {
-      id: 3,
-      title: "Math Formula Sheet",
-      downloads: 167,
-      subject: "Mathematics",
-    },
-    {
-      id: 4,
-      title: "Geography Study Guide",
-      downloads: 134,
-      subject: "Geography",
-    },
-  ];
 
   return (
     <div className="bg-gray-100">
       <div className="min-h-screen p-4 mx-auto bg-white max-w-7xl">
-        {/* Top Bar */}
-        <div className="mb-10 bg-white border-b border-gray-200 shadow-sm">
-          <div className="px-4 py-3 mx-auto max-w-7xl">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <img
-                  src="https://kimangu.vercel.app/assets/images/logo.png"
-                  alt="logo"
-                  className="w-8 h-8"
-                />
-                <h1 className="text-lg font-semibold text-gray-800">
-                  KIMANGU DAY SECONDARY
-                </h1>
-                <span className="text-gray-400">|</span>
-                <span className="text-sm text-gray-600">Digital Library</span>
-              </div>
-              <div className="flex items-center space-x-4">
-                <div className="relative group">
-                  <button className="flex items-center space-x-1 text-gray-600 hover:text-gray-800">
-                    <FaUser className="w-5 h-5" />
-                    <span className="hidden sm:inline">Account</span>
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </button>
-                  <div className="absolute right-0 z-10 hidden w-48 py-1 bg-white rounded-md shadow-lg group-hover:block">
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      Profile
-                    </a>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      Settings
-                    </a>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      Log out
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Header />
 
-        {/* Header */}
         <header className="mb-8">
           <h1 className="mb-2 text-3xl font-bold text-gray-800">
             📚 Digital Learning Materials
@@ -174,9 +50,8 @@ const App = () => {
           </div>
         </div>
 
-        {/* Stats Cards - Alternating Blue/Gray Pattern */}
+        {/* Stats Cards */}
         <div className="grid grid-cols-2 gap-6 mb-8 md:grid-cols-4">
-          {/* Blue Card */}
           <div className="p-6 border border-blue-200 rounded-lg bg-blue-50">
             <div className="flex items-center">
               <IoLibrary className="w-8 h-8 text-blue-600" />
@@ -187,10 +62,9 @@ const App = () => {
             </div>
           </div>
 
-          {/* Gray Card */}
-          <div className="p-6 border border-green-200 rounded-lg bg-green-50">
+          <div className="p-6 border border-gray-200 rounded-lg bg-gray-50">
             <div className="flex items-center">
-              <FaUpload className="w-8 h-8 text-green-600" />
+              <FaUpload className="w-8 h-8 text-gray-600" />
               <div className="ml-4">
                 <p className="text-sm text-gray-600">New This Week</p>
                 <p className="text-2xl font-bold text-gray-800">23</p>
@@ -198,7 +72,6 @@ const App = () => {
             </div>
           </div>
 
-          {/* Blue Card */}
           <div className="p-6 border border-blue-200 rounded-lg bg-blue-50">
             <div className="flex items-center">
               <FaDownload className="w-8 h-8 text-blue-600" />
@@ -261,28 +134,27 @@ const App = () => {
                   uploadDate: "5 days ago",
                 },
               ].map((material) => {
-                // Determine icon and color based on file type
                 let icon, color;
                 switch (material.type) {
                   case "PDF":
                     icon = <FaFilePdf className="w-4 h-4 mr-1" />;
-                    color = "bg-red-500"; // Adobe PDF red
+                    color = "bg-red-500";
                     break;
                   case "Video":
                     icon = <FaFileVideo className="w-4 h-4 mr-1" />;
-                    color = "bg-purple-500"; // Common video purple
+                    color = "bg-purple-500";
                     break;
                   case "PPT":
                     icon = <FaFilePowerpoint className="w-4 h-4 mr-1" />;
-                    color = "bg-orange-500"; // PowerPoint orange
+                    color = "bg-orange-500";
                     break;
                   case "Word":
                     icon = <FaFileWord className="w-4 h-4 mr-1" />;
-                    color = "bg-blue-500"; // Word blue
+                    color = "bg-blue-500";
                     break;
                   case "Image":
                     icon = <FaFileImage className="w-4 h-4 mr-1" />;
-                    color = "bg-green-500"; // Common image green
+                    color = "bg-green-500";
                     break;
                   default:
                     icon = <FaFileWord className="w-4 h-4 mr-1" />;
@@ -312,12 +184,12 @@ const App = () => {
                     <div className="flex mt-3 space-x-2">
                       {material.type !== "Video" &&
                       material.type !== "Image" ? (
-                        <button className="flex items-center px-3 py-1 text-sm font-medium text-blue-600 bg-blue-100 border rounded hover:border-blue-400">
+                        <button className="flex items-center px-4 py-1 text-sm font-medium text-blue-600 bg-blue-100 border rounded-md border-gray-50 hover:border-blue-400">
                           <FaEye className="w-4 h-4 mr-2" />
                           View
                         </button>
                       ) : null}
-                      <button className="flex items-center px-3 py-1 text-sm text-green-600 bg-green-100 border rounded hover:border-green-400">
+                      <button className="flex items-center px-4 py-1 text-sm text-green-700 bg-green-200 border rounded border-gray-50 hover:border-green-400">
                         {material.type === "Video" ? (
                           <>
                             <FaPlay className="w-4 h-4 mr-2" />
@@ -485,7 +357,7 @@ const App = () => {
           </div>
         </div>
 
-        {/* Browse by Teacher with Image Placeholders */}
+        {/* Browse by Teacher */}
         <div className="mt-8 mb-12">
           <h2 className="mb-4 text-xl font-semibold">Browse by Teacher</h2>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
@@ -531,11 +403,7 @@ const App = () => {
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="py-4 text-sm text-center text-gray-500 bg-white border-t">
-          © {new Date().getFullYear()} Kimangu Day Secondary School. All rights
-          reserved.
-        </div>
+        <Footer />
       </div>
     </div>
   );
