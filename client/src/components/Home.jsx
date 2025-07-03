@@ -17,7 +17,7 @@ const Home = () => {
             </h1>
           </div>
           <p className="max-w-2xl mx-auto text-lg text-gray-600">
-            Access all your learning resources and management tools in one place
+            Learning made digital. Learning made easy.
           </p>
         </header>
 

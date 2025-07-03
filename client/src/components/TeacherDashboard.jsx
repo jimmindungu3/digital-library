@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { IoLibrary } from "react-icons/io5";
+import Header from "./Header";
 import Footer from "./Footer";
+
+import { IoLibrary } from "react-icons/io5";
 import {
   FaSearch,
   FaFileWord,
@@ -16,11 +18,9 @@ import {
   FaDownload,
   FaGraduationCap,
   FaTrash,
-  FaBookOpen,
   FaChartBar,
   FaPlus,
 } from "react-icons/fa";
-import Header from "./Header";
 
 const TeacherDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -162,18 +162,14 @@ const TeacherDashboard = () => {
             </button>
             <button className="flex flex-col items-center p-3 text-center transition-colors bg-white border border-blue-200 rounded-lg hover:bg-blue-50">
               {" "}
-              {/* Changed from purple */}
               <FaChartBar className="w-6 h-6 mb-2 text-blue-500 sm:w-8 sm:h-8" />{" "}
-              {/* Changed from purple */}
               <p className="text-sm font-medium text-gray-800 sm:text-base">
                 View Analytics
               </p>
             </button>
             <button className="flex flex-col items-center p-3 text-center transition-colors bg-white border border-blue-200 rounded-lg hover:bg-blue-50">
               {" "}
-              {/* Changed from orange */}
               <FaUser className="w-6 h-6 mb-2 text-blue-500 sm:w-8 sm:h-8" />{" "}
-              {/* Changed from orange */}
               <p className="text-sm font-medium text-gray-800 sm:text-base">
                 Student Progress
               </p>
@@ -181,7 +177,7 @@ const TeacherDashboard = () => {
           </div>
         </div>
 
-        {/* Teacher Stats Cards - Apply subtle blues/grays */}
+        {/* Teacher Stats Cards */}
         <div>
           <h2 className="mb-3 text-lg font-semibold sm:mb-4 sm:text-xl">
             Your Work In Summary
@@ -246,13 +242,12 @@ const TeacherDashboard = () => {
           </div>
         </div>
 
-        {/* Main Content Grid - Recent Uploads and Popular Materials (by teacher) */}
+        {/* Main Content Grid */}
         <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2">
-          {/* Recent Uploads by Teacher - Keep file type colors, change general accents */}
+          {/* Recent Uploads by Teacher */}
           <div className="p-4 bg-white border border-gray-200 rounded-lg sm:p-6">
             <h2 className="flex items-center mb-3 text-lg font-semibold sm:mb-4 sm:text-xl">
               <FaUpload className="w-4 h-4 mr-2 text-blue-500 sm:w-5 sm:h-5" />{" "}
-              {/* Changed from blue */}
               Your Recent Uploads
             </h2>
             <div className="space-y-3 sm:space-y-4">
@@ -341,11 +336,6 @@ const TeacherDashboard = () => {
                         {item.views}
                       </p>
                       <p className="text-xs text-gray-500">Views</p>
-                      <p className="mt-1 text-base font-bold text-blue-500 sm:text-lg">
-                        {" "}
-                        {item.downloads}
-                      </p>
-                      <p className="text-xs text-gray-500">Downloads</p>
                     </div>
                   </div>
                 );
