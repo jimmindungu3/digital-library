@@ -574,7 +574,7 @@ const AdminDashboard = () => {
                         )}
                       </td>
                       <td className="px-4 py-4 text-sm text-gray-500 sm:px-6">
-                        <div className="flex space-x-2">
+                        <div className="flex space-x-6">
                           <button
                             onClick={() => handleEditUser(user)}
                             className="text-blue-600 hover:text-blue-800"
