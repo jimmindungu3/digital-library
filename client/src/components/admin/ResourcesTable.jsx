@@ -77,109 +77,138 @@ const ResourcesTable = ({ resources, handleDeleteResource }) => {
 
   return (
     <div className="overflow-hidden bg-white border border-gray-200 rounded-lg">
-      <div className="px-4 py-3 border-b border-gray-200 sm:px-6">
+      <div className="px-6 py-4 border-b border-gray-200">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-gray-800 sm:text-xl">
-            Resource Management
-          </h2>
+          <div>
+            <h2 className="text-lg font-semibold text-gray-800 sm:text-xl">
+              Resource Management
+            </h2>
+            <p className="mt-1 text-sm text-gray-500">
+              {filteredResources.length} of {resources.length} resources
+              {areFiltersActive() && " (filtered)"}
+            </p>
+          </div>
+
           <div className="flex items-center space-x-2">
             {areFiltersActive() && (
               <button
                 onClick={clearFilters}
-                className="flex items-center px-3 py-1 text-xs text-red-600 bg-red-100 rounded-full hover:bg-red-200"
+                className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-gray-600 bg-transparent rounded-md hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-300 focus:ring-offset-1"
               >
-                <FaTimes className="mr-1" />
+                <FaTimes className="w-3.5 h-3.5 mr-1.5 text-gray-500" />
                 Clear Filters
               </button>
             )}
+
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="flex items-center px-3 py-1 text-xs text-white bg-blue-500 rounded-full hover:bg-blue-600"
+              className={`inline-flex items-center px-3 py-1.5 text-sm font-medium rounded-md focus:outline-none focus:ring-1 focus:ring-gray-300 focus:ring-offset-1 ${
+                showFilters || areFiltersActive()
+                  ? "text-blue-600 bg-blue-50 hover:bg-blue-100"
+                  : "text-gray-600 bg-transparent hover:bg-gray-100"
+              }`}
             >
-              <FaFilter className="mr-1" />
+              <FaFilter className="w-3.5 h-3.5 mr-1.5" />
               Filters
             </button>
           </div>
         </div>
 
         {/* Filter Panel */}
-        <div className="p-4 mt-4 rounded-lg bg-gray-50">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <div>
-              <label className="block text-xs font-medium text-gray-700">
-                Teacher
-              </label>
-              <select
-                name="teacher"
-                value={filters.teacher}
-                onChange={handleFilterChange}
-                className="w-full p-2 mt-1 text-sm border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="">All Teachers</option>
-                {teachers.map((teacher) => (
-                  <option key={teacher} value={teacher}>
-                    {teacher}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-gray-700">
-                Subject
-              </label>
-              <select
-                name="subject"
-                value={filters.subject}
-                onChange={handleFilterChange}
-                className="w-full p-2 mt-1 text-sm border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="">All Subjects</option>
-                {subjects.map((subject) => (
-                  <option key={subject} value={subject}>
-                    {subject}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-gray-700">
-                Resource Type
-              </label>
-              <select
-                name="type"
-                value={filters.type}
-                onChange={handleFilterChange}
-                className="w-full p-2 mt-1 text-sm border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-              >
-                <option value="">All Types</option>
-                {types.map((type) => (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
+        {showFilters && (
+          <div className="p-4 mt-4 rounded-lg bg-gray-50">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <div>
+                <label className="block mb-1 text-sm font-medium text-gray-700">
+                  Teacher
+                </label>
+                <select
+                  name="teacher"
+                  value={filters.teacher}
+                  onChange={handleFilterChange}
+                  className="block w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option value="">All Teachers</option>
+                  {teachers.map((teacher) => (
+                    <option key={teacher} value={teacher}>
+                      {teacher}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block mb-1 text-sm font-medium text-gray-700">
+                  Subject
+                </label>
+                <select
+                  name="subject"
+                  value={filters.subject}
+                  onChange={handleFilterChange}
+                  className="block w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option value="">All Subjects</option>
+                  {subjects.map((subject) => (
+                    <option key={subject} value={subject}>
+                      {subject}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block mb-1 text-sm font-medium text-gray-700">
+                  Resource Type
+                </label>
+                <select
+                  name="type"
+                  value={filters.type}
+                  onChange={handleFilterChange}
+                  className="block w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option value="">All Types</option>
+                  {types.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full">
+        <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-4 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase sm:px-6">
+              <th
+                scope="col"
+                className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+              >
                 Resource Details
               </th>
-              <th className="px-4 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase sm:px-6">
+              <th
+                scope="col"
+                className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+              >
                 Subject & Teacher
               </th>
-              <th className="px-4 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase sm:px-6">
+              <th
+                scope="col"
+                className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+              >
                 Upload Date
               </th>
-              <th className="px-4 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase sm:px-6">
+              <th
+                scope="col"
+                className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+              >
                 Engagement
               </th>
-              <th className="px-4 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase sm:px-6">
+              <th
+                scope="col"
+                className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase"
+              >
                 Actions
               </th>
             </tr>
@@ -190,11 +219,11 @@ const ResourcesTable = ({ resources, handleDeleteResource }) => {
                 const { icon, color } = getFileTypeDetails(resource.type);
                 return (
                   <tr key={resource.id} className="hover:bg-gray-50">
-                    <td className="px-4 py-4 sm:px-6">
+                    <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="flex-shrink-0 w-8 h-8">
+                        <div className="flex-shrink-0 w-10 h-10">
                           <div
-                            className={`flex items-center justify-center w-8 h-8 rounded-full ${color} text-white`}
+                            className={`flex items-center justify-center w-10 h-10 rounded-full ${color} text-white`}
                           >
                             {icon}
                           </div>
@@ -203,46 +232,46 @@ const ResourcesTable = ({ resources, handleDeleteResource }) => {
                           <div className="text-sm font-medium text-gray-900">
                             {resource.title}
                           </div>
-                          <div className="text-xs text-gray-500">
+                          <div className="text-sm text-gray-500">
                             {resource.type}
                           </div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-4 sm:px-6">
+                    <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900">
                         {resource.subject}
                       </div>
-                      <div className="text-xs text-gray-500">
+                      <div className="text-sm text-gray-500">
                         By: {resource.teacher}
                       </div>
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-500 sm:px-6">
+                    <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                       {resource.uploadDate}
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-500 sm:px-6">
-                      <div>
+                    <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                      <div className="space-y-1">
                         <div className="flex items-center">
-                          <FaEye className="w-3 h-3 mr-1" />
-                          {resource.views} views
+                          <FaEye className="w-3.5 h-3.5 mr-2 text-gray-400" />
+                          <span>{resource.views} views</span>
                         </div>
                         <div className="flex items-center">
-                          <FaDownload className="w-3 h-3 mr-1" />
-                          {resource.downloads} downloads
+                          <FaDownload className="w-3.5 h-3.5 mr-2 text-gray-400" />
+                          <span>{resource.downloads} downloads</span>
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-500 sm:px-6">
-                      <div className="flex space-x-6">
+                    <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
+                      <div className="flex space-x-3">
                         <button
                           onClick={() => handleDeleteResource(resource.id)}
-                          className="text-blue-500 hover:text-blue-800"
+                          className="text-gray-500 hover:text-blue-600"
                         >
                           <FaEye className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => handleDeleteResource(resource.id)}
-                          className="text-rose-500 hover:text-rose-600"
+                          className="text-gray-500 hover:text-red-600"
                         >
                           <FaTrash className="w-4 h-4" />
                         </button>
@@ -253,18 +282,36 @@ const ResourcesTable = ({ resources, handleDeleteResource }) => {
               })
             ) : (
               <tr>
-                <td colSpan="5" className="px-4 py-6 text-center text-gray-500">
-                  No resources found matching your filters
+                <td colSpan="5" className="px-6 py-8 text-center">
+                  <div className="text-gray-500">
+                    <svg
+                      className="w-12 h-12 mx-auto text-gray-300"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1}
+                        d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    <h3 className="mt-2 text-sm font-medium text-gray-700">
+                      No resources found
+                    </h3>
+                    <p className="mt-1 text-sm text-gray-500">
+                      {areFiltersActive()
+                        ? "Try adjusting your filters"
+                        : "Upload a resource to get started"}
+                    </p>
+                  </div>
                 </td>
               </tr>
             )}
           </tbody>
         </table>
-        {/* Resources Count */}
-        <div className="px-6 py-4 text-sm text-right text-gray-500 bg-gray-50">
-          Showing {filteredResources.length} of {resources.length} resources
-          {areFiltersActive() && " (filtered)"}
-        </div>
       </div>
     </div>
   );

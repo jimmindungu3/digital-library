@@ -1,17 +1,23 @@
-import { FaGraduationCap, FaEdit, FaTrash } from "react-icons/fa";
+import { FaGraduationCap, FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 
-const StudentsTable = ({
-  students,
-  handleEditUser,
-  handleDeleteUser,
-  getStatusColor,
-}) => {
+const addNewStudent = () => {
+  alert("New student added");
+};
+
+const StudentsTable = ({ students, getStatusColor }) => {
   return (
     <div className="overflow-hidden bg-white border border-gray-200 rounded-lg">
-      <div className="px-4 py-3 border-b border-gray-200 sm:px-6">
+      <div className="flex justify-between px-4 py-3 border-b border-gray-200 sm:px-6">
         <h2 className="text-lg font-semibold text-gray-800 sm:text-xl">
           Student Management
         </h2>
+        <button
+          onClick={addNewStudent}
+          className="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+        >
+          <FaPlus className="mr-2 text-white" />
+          New Student
+        </button>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full">
