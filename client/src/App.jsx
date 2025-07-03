@@ -7,7 +7,7 @@ import UploadMaterial from "./components/UploadMaterial";
 import EditMaterial from "./components/EditMaterial";
 import StudentLogin from "./components/StudentLogin";
 import TeacherLogin from "./components/TeacherLogin";
-import AdminDashboard from "./components/AdminDashboard";
+import AdminDashboard from "./components/admin/AdminDashboard";
 
 const App = () => {
   return (
