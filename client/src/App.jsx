@@ -8,6 +8,7 @@ import EditMaterial from "./components/EditMaterial";
 import StudentLogin from "./components/StudentLogin";
 import TeacherLogin from "./components/TeacherLogin";
 import AdminDashboard from "./components/admin/AdminDashboard";
+import MaterialsView from "./components/MaterialsView";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/student-dashboard" element={<StudentDashboard />} />
         <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
+        <Route path="/materials-veiw" element={<MaterialsView />} />
         <Route path="/upload-material" element={<UploadMaterial />} />
         <Route path="/edit-material" element={<EditMaterial />} />
         <Route path="/student-login" element={<StudentLogin />} />
