@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   FaSearch,
   FaFileWord,
@@ -19,6 +19,110 @@ import Header from "./Header";
 
 const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [recentMaterials, setRecentMaterials] = useState([]);
+  const [popularMaterials, setPopularMaterials] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchMaterials = async () => {
+      try {
+        setLoading(true);
+        const recentResponse = await fetch(
+          "http://localhost:5000/api/materials"
+        );
+        const recentData = await recentResponse.json();
+        setRecentMaterials(recentData.slice(0, 4));
+
+        setPopularMaterials(recentData.slice(0, 5));
+      } catch (err) {
+        console.error("Error fetching materials:", err);
+        setError("Failed to load materials");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMaterials();
+  }, []);
+
+  const getFileTypeIcon = (fileType) => {
+    switch (fileType.toLowerCase()) {
+      case "pdf":
+        return <FaFilePdf className="w-4 h-4 mr-1" />;
+      case "video":
+        return <FaFileVideo className="w-4 h-4 mr-1" />;
+      case "ppt":
+      case "pptx":
+      case "powerpoint":
+        return <FaFilePowerpoint className="w-4 h-4 mr-1" />;
+      case "doc":
+      case "docx":
+      case "word":
+        return <FaFileWord className="w-4 h-4 mr-1" />;
+      case "jpg":
+      case "jpeg":
+      case "png":
+      case "gif":
+      case "image":
+        return <FaFileImage className="w-4 h-4 mr-1" />;
+      default:
+        return <FaFileWord className="w-4 h-4 mr-1" />;
+    }
+  };
+
+  const getFileTypeColor = (fileType) => {
+    switch (fileType.toLowerCase()) {
+      case "pdf":
+        return "bg-red-500";
+      case "video":
+        return "bg-purple-500";
+      case "ppt":
+      case "pptx":
+      case "powerpoint":
+        return "bg-orange-500";
+      case "doc":
+      case "docx":
+      case "word":
+        return "bg-blue-500";
+      case "jpg":
+      case "jpeg":
+      case "png":
+      case "gif":
+      case "image":
+        return "bg-green-500";
+      default:
+        return "bg-gray-500";
+    }
+  };
+
+  const formatUploadDate = (dateString) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
+
+    if (diffInDays === 0) return "Today";
+    if (diffInDays === 1) return "Yesterday";
+    if (diffInDays < 7) return `${diffInDays} days ago`;
+    if (diffInDays < 30) return `${Math.floor(diffInDays / 7)} weeks ago`;
+    return `${Math.floor(diffInDays / 30)} months ago`;
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p>Loading materials...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-red-500">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray-100">
@@ -57,77 +161,12 @@ const App = () => {
               Recently Added
             </h2>
             <div className="space-y-4">
-              {[
-                {
-                  id: 1,
-                  title: "Introduction to Calculus",
-                  type: "PDF",
-                  subject: "Mathematics",
-                  teacher: "Mr. Mwangi",
-                  uploadDate: "2 days ago",
-                },
-                {
-                  id: 2,
-                  title: "Chemical Bonding Explained",
-                  type: "Video",
-                  subject: "Chemistry",
-                  teacher: "Ms. Achieng",
-                  uploadDate: "1 day ago",
-                },
-                {
-                  id: 3,
-                  title: "Business Finance Basics",
-                  type: "PPT",
-                  subject: "Business Studies",
-                  teacher: "Mr. Otieno",
-                  uploadDate: "3 days ago",
-                },
-                {
-                  id: 4,
-                  title: "English Literature Notes",
-                  type: "Word",
-                  subject: "English",
-                  teacher: "Mrs. Kamau",
-                  uploadDate: "4 days ago",
-                },
-                {
-                  id: 5,
-                  title: "Biology Diagrams",
-                  type: "Image",
-                  subject: "Biology",
-                  teacher: "Dr. Wambui",
-                  uploadDate: "5 days ago",
-                },
-              ].map((material) => {
-                let icon, color;
-                switch (material.type) {
-                  case "PDF":
-                    icon = <FaFilePdf className="w-4 h-4 mr-1" />;
-                    color = "bg-red-500";
-                    break;
-                  case "Video":
-                    icon = <FaFileVideo className="w-4 h-4 mr-1" />;
-                    color = "bg-purple-500";
-                    break;
-                  case "PPT":
-                    icon = <FaFilePowerpoint className="w-4 h-4 mr-1" />;
-                    color = "bg-orange-500";
-                    break;
-                  case "Word":
-                    icon = <FaFileWord className="w-4 h-4 mr-1" />;
-                    color = "bg-blue-500";
-                    break;
-                  case "Image":
-                    icon = <FaFileImage className="w-4 h-4 mr-1" />;
-                    color = "bg-green-500";
-                    break;
-                  default:
-                    icon = <FaFileWord className="w-4 h-4 mr-1" />;
-                    color = "bg-gray-500";
-                }
+              {recentMaterials.map((material) => {
+                const icon = getFileTypeIcon(material.fileType);
+                const color = getFileTypeColor(material.fileType);
 
                 return (
-                  <div key={material.id} className="p-4 rounded-lg bg-gray-50">
+                  <div key={material._id} className="p-4 rounded-lg bg-gray-50">
                     <div className="flex items-start justify-between mb-2">
                       <h3 className="font-medium text-gray-800">
                         {material.title}
@@ -136,26 +175,32 @@ const App = () => {
                         className={`flex items-center px-2 py-1 text-xs text-white rounded-md ${color}`}
                       >
                         {icon}
-                        {material.type}
+                        {material.fileType}
                       </span>
                     </div>
                     <div className="text-sm text-gray-600">
                       <p>Subject: {material.subject}</p>
-                      <p>Teacher: {material.teacher}</p>
+                      <p>Uploaded by: {material.uploadedBy || "Teacher"}</p>
                       <div className="flex justify-between">
-                        <p>Uploaded: {material.uploadDate}</p>
+                        <p>
+                          Uploaded:{" "}
+                          {formatUploadDate(
+                            material.uploadDate || material.createdAt
+                          )}
+                        </p>
+                        <p>Size: {material.fileSize}</p>
                       </div>
                     </div>
                     <div className="flex mt-3 space-x-2">
-                      {material.type !== "Video" &&
-                      material.type !== "Image" ? (
+                      {material.fileType.toLowerCase() !== "video" &&
+                      material.fileType.toLowerCase() !== "image" ? (
                         <button className="flex items-center px-4 py-1 text-sm font-medium text-blue-600 bg-blue-100 border rounded-md border-gray-50 hover:border-blue-400">
                           <FaEye className="w-4 h-4 mr-2" />
                           View
                         </button>
                       ) : null}
                       <button className="flex items-center px-4 py-1 text-sm text-green-700 bg-green-200 border rounded border-gray-50 hover:border-green-400">
-                        {material.type === "Video" ? (
+                        {material.fileType.toLowerCase() === "video" ? (
                           <>
                             <FaPlay className="w-4 h-4 mr-2" />
                             Play
@@ -181,91 +226,13 @@ const App = () => {
               Most Viewed
             </h2>
             <div className="space-y-4">
-              {[
-                {
-                  id: 1,
-                  title: "Advanced Algebra Notes",
-                  type: "PDF",
-                  subject: "Mathematics",
-                  teacher: "Mr. Mwangi",
-                  downloads: 245,
-                },
-                {
-                  id: 2,
-                  title: "Organic Chemistry Lecture",
-                  type: "Video",
-                  subject: "Chemistry",
-                  teacher: "Ms. Achieng",
-                  downloads: 189,
-                },
-                {
-                  id: 3,
-                  title: "Financial Accounting Slides",
-                  type: "PPT",
-                  subject: "Business Studies",
-                  teacher: "Mr. Otieno",
-                  downloads: 132,
-                },
-                {
-                  id: 4,
-                  title: "Shakespeare Analysis",
-                  type: "Word",
-                  subject: "English",
-                  teacher: "Mrs. Kamau",
-                  downloads: 98,
-                },
-                {
-                  id: 5,
-                  title: "Cell Biology Diagrams",
-                  type: "Image",
-                  subject: "Biology",
-                  teacher: "Dr. Wambui",
-                  downloads: 175,
-                },
-                {
-                  id: 6,
-                  title: "Trigonometry Practice Problems",
-                  type: "PDF",
-                  subject: "Mathematics",
-                  teacher: "Mr. Kariuki",
-                  downloads: 210,
-                },
-                {
-                  id: 7,
-                  title: "French Grammar Guide",
-                  type: "Word",
-                  subject: "French",
-                  teacher: "Ms. Dubois",
-                  downloads: 87,
-                },
-              ].map((item) => {
-                // Determine icon and color based on file type
-                let icon, color;
-                switch (item.type) {
-                  case "PDF":
-                    icon = <FaFilePdf className="w-4 h-4" />;
-                    color = "bg-red-500";
-                    break;
-                  case "Video":
-                    icon = <FaFileVideo className="w-4 h-4" />;
-                    color = "bg-purple-500";
-                    break;
-                  case "PPT":
-                    icon = <FaFilePowerpoint className="w-4 h-4" />;
-                    color = "bg-orange-500";
-                    break;
-                  case "Word":
-                    icon = <FaFileWord className="w-4 h-4" />;
-                    color = "bg-blue-500";
-                    break;
-                  default:
-                    icon = <FaFileWord className="w-4 h-4" />;
-                    color = "bg-gray-500";
-                }
+              {popularMaterials.map((material) => {
+                const icon = getFileTypeIcon(material.fileType);
+                const color = getFileTypeColor(material.fileType);
 
                 return (
                   <div
-                    key={item.id}
+                    key={material._id}
                     className="flex items-center justify-between p-3 rounded-lg bg-gray-50"
                   >
                     <div className="flex items-center space-x-3">
@@ -276,21 +243,22 @@ const App = () => {
                       </span>
                       <div>
                         <h3 className="font-medium text-gray-800">
-                          {item.title}
+                          {material.title}
                         </h3>
                         <div className="flex space-x-2 text-sm text-gray-600">
-                          <p>{item.subject}</p>
+                          <p>{material.subject}</p>
                           <span className="text-gray-400">|</span>
                           <p className="flex items-center">
                             <FaUser className="w-3 h-3 mr-1" />
-                            {item.teacher}
+                            {material.uploadedBy || "Teacher"}
                           </p>
                         </div>
                       </div>
                     </div>
                     <div className="text-right">
                       <p className="text-lg font-bold text-blue-600">
-                        {item.downloads}
+                        {/* TODO: Replace with actual view count when implemented */}
+                        {Math.floor(Math.random() * 200) + 50}
                       </p>
                       <p className="text-xs text-gray-500">Views</p>
                     </div>
@@ -301,6 +269,7 @@ const App = () => {
           </div>
         </div>
 
+        {/* Rest of the component remains the same */}
         {/* Subject Categories */}
         <div className="mt-8">
           <h2 className="mb-4 text-xl font-semibold">Browse by Subject</h2>
