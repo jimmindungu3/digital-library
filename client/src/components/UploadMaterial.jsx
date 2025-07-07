@@ -1,3 +1,5 @@
+import Header from "./Header";
+import Footer from "./Footer";
 import { useState, useRef } from "react";
 import {
   FaFileWord,
@@ -9,13 +11,12 @@ import {
   FaTimes,
   FaSpinner,
 } from "react-icons/fa";
-import Footer from "./Footer";
-import Header from "./Header";
 
-const UploadMaterial = ({ onClose, onUpload }) => {
+const UploadMaterial = () => {
   const [file, setFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [error, setError] = useState("");
   const fileInputRef = useRef(null);
   const [formData, setFormData] = useState({
     title: "",
@@ -37,8 +38,12 @@ const UploadMaterial = ({ onClose, onUpload }) => {
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
+      if (selectedFile.size > 50 * 1024 * 1024) {
+        setError("File size must be less than 50MB");
+        return;
+      }
+      setError("");
       setFile(selectedFile);
-      // Auto-detect file type based on extension
       const extension = selectedFile.name.split(".").pop().toLowerCase();
       let detectedType = "";
 
@@ -71,50 +76,54 @@ const UploadMaterial = ({ onClose, onUpload }) => {
     e.preventDefault();
 
     if (!file || !formData.title || !formData.subject || !formData.fileType) {
-      alert("Please fill all required fields and select a file");
+      setError("Please fill all required fields and select a file");
       return;
     }
 
     setIsUploading(true);
     setUploadProgress(0);
+    setError("");
 
-    // Simulate upload progress (in a real app, you'd use actual upload API)
-    const interval = setInterval(() => {
-      setUploadProgress((prev) => {
-        if (prev >= 90) {
-          clearInterval(interval);
-          return prev;
-        }
-        return prev + 10;
-      });
-    }, 300);
+    const formDataToSend = new FormData();
+    formDataToSend.append("file", file);
+    formDataToSend.append("title", formData.title);
+    formDataToSend.append("description", formData.description);
+    formDataToSend.append("subject", formData.subject);
+    formDataToSend.append("gradeLevel", formData.gradeLevel);
+    formDataToSend.append("fileType", formData.fileType);
+    formDataToSend.append("tags", formData.tags);
+    // Add userId when you implement authentication
+    // formDataToSend.append("userId", userId);
 
     try {
-      // In a real app, you would upload to your backend here
-      // const formDataToSend = new FormData();
-      // formDataToSend.append("file", file);
-      // formDataToSend.append("metadata", JSON.stringify(formData));
+      // Create progress event handler
+      const xhr = new XMLHttpRequest();
+      xhr.upload.addEventListener("progress", (event) => {
+        if (event.lengthComputable) {
+          const progress = Math.round((event.loaded / event.total) * 90);
+          setUploadProgress(progress);
+        }
+      });
 
-      // Simulate API call delay
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+      const response = await fetch("http://localhost:5000/api/materials", {
+        method: "POST",
+        body: formDataToSend,
+      });
 
-      clearInterval(interval);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Upload failed");
+      }
+
+      const data = await response.json();
+      console.log(data);
       setUploadProgress(100);
 
-      // Simulate successful upload
-      const uploadedMaterial = {
-        id: Date.now(),
-        ...formData,
-        fileName: file.name,
-        fileSize: (file.size / (1024 * 1024)).toFixed(2) + " MB",
-        uploadDate: new Date().toLocaleDateString(),
-      };
-
-      onUpload(uploadedMaterial);
-      onClose();
+      // Close the upload modal after a short delay
+      setTimeout(() => {}, 1000);
     } catch (error) {
       console.error("Upload failed:", error);
-      alert("Upload failed. Please try again.");
+      setError(error.message || "Upload failed. Please try again.");
     } finally {
       setIsUploading(false);
     }
@@ -122,7 +131,7 @@ const UploadMaterial = ({ onClose, onUpload }) => {
 
   return (
     <div className="bg-gray-50">
-      <div className="mx-auto bg-white max-w-7xl ">
+      <div className="mx-auto bg-white max-w-4xl ">
         <Header />
 
         {/* Page header */}
@@ -141,9 +150,15 @@ const UploadMaterial = ({ onClose, onUpload }) => {
         <div className="px-6 mb-20 rounded-lg">
           <div className="mb-4">
             <h2 className="text-xl font-bold text-gray-800">
-              Upload new and engaging learning materails.
+              Upload New Material.
             </h2>
           </div>
+
+          {error && (
+            <div className="p-3 mb-4 text-red-700 bg-red-100 border border-red-200 rounded-lg">
+              {error}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit}>
             {/* File Upload Section */}
@@ -188,6 +203,7 @@ const UploadMaterial = ({ onClose, onUpload }) => {
                       type="button"
                       onClick={handleRemoveFile}
                       className="p-1 text-gray-500 rounded-full hover:bg-gray-200"
+                      disabled={isUploading}
                     >
                       <FaTimes />
                     </button>
@@ -238,13 +254,24 @@ const UploadMaterial = ({ onClose, onUpload }) => {
                   required
                 >
                   <option value="">Select subject</option>
+                  <option value="English & Literature">
+                    English & Literature
+                  </option>
+                  <option value="Kiswahili">Kiswahili</option>
                   <option value="Mathematics">Mathematics</option>
+                  <option value="Biology">Biology</option>
                   <option value="Physics">Physics</option>
                   <option value="Chemistry">Chemistry</option>
-                  <option value="Biology">Biology</option>
-                  <option value="English">English</option>
-                  <option value="Business Studies">Business Studies</option>
+                  <option value="History and Government">
+                    History and Government
+                  </option>
+                  <option value="Geography">Geography</option>
+                  <option value="Christian Religious Education">
+                    Christian Religious Education
+                  </option>
+                  <option value="Agriculture">Agriculture</option>
                   <option value="Computer Studies">Computer Studies</option>
+                  <option value="Business Studies">Business Studies</option>
                 </select>
               </div>
 
@@ -263,6 +290,11 @@ const UploadMaterial = ({ onClose, onUpload }) => {
                   <option value="Form 2">Form 2</option>
                   <option value="Form 3">Form 3</option>
                   <option value="Form 4">Form 4</option>
+                  <option value="Grade 6">Grade 6</option>
+                  <option value="Grade 7">Grade 7</option>
+                  <option value="Grade 8">Grade 8</option>
+                  <option value="Grade 6">Grade 9</option>
+                  <option value="Grade 10">Grade 10</option>
                 </select>
               </div>
 
@@ -326,7 +358,6 @@ const UploadMaterial = ({ onClose, onUpload }) => {
             <div className="flex justify-end space-x-3">
               <button
                 type="button"
-                onClick={onClose}
                 className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
                 disabled={isUploading}
               >

@@ -21,11 +21,11 @@ import {
   FaChartBar,
   FaPlus,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const TeacherDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Placeholder data for demonstration
   const teacherName = "Mr. Mwangi";
   const teacherSubjects = ["Mathematics", "Physics"];
 
@@ -86,7 +86,7 @@ const TeacherDashboard = () => {
     },
   ];
 
-  // Helper function to get icon and color based on file type - KEEP THESE COLORS
+  // Helper function to get icon and color based on file type
   const getFileTypeDetails = (type) => {
     switch (type) {
       case "PDF":
@@ -125,7 +125,7 @@ const TeacherDashboard = () => {
           </div>
         </header>
 
-        {/* Search Bar - No changes needed, already subtle */}
+        {/* Search Bar */}
         <div className="mb-6 sm:mb-8">
           <div className="relative w-full sm:max-w-md">
             <FaSearch className="absolute w-3 h-3 text-gray-400 sm:w-4 sm:h-4 left-3 top-3" />
@@ -139,21 +139,21 @@ const TeacherDashboard = () => {
           </div>
         </div>
 
-        {/* Quick Actions / Teacher Tools (New Section) - Apply subtle blues/grays */}
+        {/* Quick Actions / Teacher Tools (New Section) */}
         <div className="mt-6 mb-8 sm:mt-8">
           <h2 className="mb-3 text-lg font-semibold sm:mb-4 sm:text-xl">
             Quick Actions
           </h2>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-            <button className="flex flex-col items-center p-3 text-center transition-colors bg-white border border-blue-200 rounded-lg hover:bg-blue-50">
-              {" "}
-              {/* Changed from green */}
-              <FaUpload className="w-6 h-6 mb-2 text-blue-500 sm:w-8 sm:h-8" />{" "}
-              {/* Changed from green */}
-              <p className="text-sm font-medium text-gray-800 sm:text-base">
-                Upload New Material
-              </p>
-            </button>
+            <Link to="/upload-material">
+              <div className="flex flex-col items-center p-3 text-center transition-colors bg-white border border-blue-200 rounded-lg hover:bg-blue-50">
+                <FaUpload className="w-6 h-6 mb-2 text-blue-500 sm:w-8 sm:h-8" />
+                <p className="text-sm font-medium text-gray-800 sm:text-base">
+                  Upload New Material
+                </p>
+              </div>
+            </Link>
+
             <button className="flex flex-col items-center p-3 text-center transition-colors bg-white border border-blue-200 rounded-lg hover:bg-blue-50">
               <FaCog className="w-6 h-6 mb-2 text-blue-500 sm:w-8 sm:h-8" />
               <p className="text-sm font-medium text-gray-800 sm:text-base">

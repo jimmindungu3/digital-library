@@ -8,14 +8,12 @@ import {
   FaFileImage,
   FaUser,
   FaDownload,
-  FaUpload,
   FaEye,
   FaClock,
   FaStar,
   FaPlay,
 } from "react-icons/fa";
 
-import { IoLibrary } from "react-icons/io5";
 import Footer from "./Footer";
 import Header from "./Header";
 
@@ -27,9 +25,9 @@ const App = () => {
       <div className="min-h-screen p-4 mx-auto bg-white max-w-7xl">
         <Header />
 
-        <header className="mb-8">
+        <header className="mb-8 border-b">
           <h1 className="mb-2 text-3xl font-bold text-gray-800">
-            📚 Digital Learning Materials
+            📚 E-Learning Materials
           </h1>
           <p className="text-gray-600">
             Access study materials, notes, quizzes, and past papers
@@ -47,39 +45,6 @@ const App = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-          </div>
-        </div>
-
-        {/* Stats Cards */}
-        <div className="grid grid-cols-2 gap-6 mb-8 md:grid-cols-4">
-          <div className="p-6 border border-blue-200 rounded-lg bg-blue-50">
-            <div className="flex items-center">
-              <IoLibrary className="w-8 h-8 text-blue-600" />
-              <div className="ml-4">
-                <p className="text-sm text-gray-600">Total Materials</p>
-                <p className="text-2xl font-bold text-gray-800">1,847</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="p-6 border border-gray-200 rounded-lg bg-gray-50">
-            <div className="flex items-center">
-              <FaUpload className="w-8 h-8 text-gray-600" />
-              <div className="ml-4">
-                <p className="text-sm text-gray-600">New This Week</p>
-                <p className="text-2xl font-bold text-gray-800">23</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="p-6 border border-blue-200 rounded-lg bg-blue-50">
-            <div className="flex items-center">
-              <FaDownload className="w-8 h-8 text-blue-600" />
-              <div className="ml-4">
-                <p className="text-sm text-gray-600">Downloads This Week</p>
-                <p className="text-2xl font-bold text-gray-800">89</p>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -362,9 +327,9 @@ const App = () => {
                 icon: "✝️",
                 color: "text-indigo-600",
               },
-              { name: "Business Studies", icon: "💼", color: "text-gray-700" },
               { name: "Agriculture", icon: "🌾", color: "text-lime-600" },
               { name: "Computer Studies", icon: "💻", color: "text-cyan-600" },
+              { name: "Business Studies", icon: "💼", color: "text-gray-700" },
             ].map((subject) => (
               <button
                 key={subject.name}
